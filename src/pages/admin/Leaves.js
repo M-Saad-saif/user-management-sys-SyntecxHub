@@ -14,6 +14,7 @@ const Leaves = () => {
 
   useEffect(() => {
     fetchLeaves();
+    // eslint-disable-next-line
   }, [employeeId]);
 
   const fetchLeaves = async () => {

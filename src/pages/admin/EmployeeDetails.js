@@ -14,6 +14,7 @@ const EmployeeDetails = () => {
 
   useEffect(() => {
     fetchEmployee();
+    // eslint-disable-next-line
   }, [id]);
 
   const fetchEmployee = async () => {
