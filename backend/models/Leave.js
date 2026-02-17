@@ -50,11 +50,10 @@ const leaveSchema = new mongoose.Schema({
 });
 
 // Validation: toDate must be after fromDate
-leaveSchema.pre("save", function (next) {
+leaveSchema.pre("save", function () {
   if (this.toDate <= this.fromDate) {
-    next(new Error("To date must be after from date"));
+    throw new Error("To date must be after from date");
   }
-  next();
 });
 
 module.exports = mongoose.model("Leave", leaveSchema);

@@ -91,13 +91,19 @@ const createEmployee = async (req, res, next) => {
       profilePicture,
     });
 
-    // Create user account
-    const user = await User.create({
-      email,
-      password: password || "123456", // Default password
-      role: "employee",
-      employee: employee._id,
-    });
+    let user;
+    try {
+      // Create user account
+      user = await User.create({
+        email,
+        password: password || "123456", // Default password
+        role: "employee",
+        employee: employee._id,
+      });
+    } catch (createUserError) {
+      await Employee.findByIdAndDelete(employee._id);
+      throw createUserError;
+    }
 
     // Link user to employee
     employee.user = user._id;
@@ -160,7 +166,8 @@ const updateEmployee = async (req, res, next) => {
     }).populate("department", "name");
 
     // Update user email if changed
-    if (req.body.email && req.body.email !== employee.email) {
+    const previousEmail = employee.email;
+    if (req.body.email && req.body.email !== previousEmail) {
       await User.findByIdAndUpdate(employee.user, { email: req.body.email });
     }
 
