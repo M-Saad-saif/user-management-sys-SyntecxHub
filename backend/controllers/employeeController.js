@@ -72,12 +72,6 @@ const createEmployee = async (req, res, next) => {
       });
     }
 
-    // Handle profile picture
-    let profilePicture = "";
-    if (req.file) {
-      profilePicture = req.file.filename;
-    }
-
     // Create employee
     const employee = await Employee.create({
       fullName,
@@ -88,7 +82,6 @@ const createEmployee = async (req, res, next) => {
       address,
       department,
       salary,
-      profilePicture,
     });
 
     let user;
@@ -142,23 +135,6 @@ const updateEmployee = async (req, res, next) => {
       });
     }
 
-    // Handle profile picture update
-    if (req.file) {
-      // Delete old profile picture if exists
-      if (employee.profilePicture) {
-        const oldPath = path.join(
-          __dirname,
-          "..",
-          "uploads",
-          employee.profilePicture,
-        );
-        if (fs.existsSync(oldPath)) {
-          fs.unlinkSync(oldPath);
-        }
-      }
-      req.body.profilePicture = req.file.filename;
-    }
-
     // Update employee
     employee = await Employee.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -198,19 +174,7 @@ const deleteEmployee = async (req, res, next) => {
       });
     }
 
-    // Delete profile picture if exists
-    if (employee.profilePicture) {
-      const filePath = path.join(
-        __dirname,
-        "..",
-        "uploads",
-        employee.profilePicture,
-      );
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-    }
-
+   
     // Delete associated user account
     if (employee.user) {
       await User.findByIdAndDelete(employee.user);

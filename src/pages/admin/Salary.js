@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { employeeAPI, departmentAPI, salaryAPI } from "../../services/api";
 import Sidebar from "../../components/common/Sidebar";
 import Navbar from "../../components/common/Navbar";
@@ -8,6 +9,7 @@ import Modal from "../../components/common/Modal";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 
 const Salary = () => {
+  const { employeeId } = useParams();
   const [departments, setDepartments] = useState([]);
   const [selectedDept, setSelectedDept] = useState("");
   const [employees, setEmployees] = useState([]);
@@ -21,8 +23,12 @@ const Salary = () => {
   });
 
   useEffect(() => {
-    fetchDepartments();
-  }, []);
+    if (employeeId) {
+      fetchEmployeeById(employeeId);
+    } else {
+      fetchDepartments();
+    }
+  }, [employeeId]);
 
   const fetchDepartments = async () => {
     try {
@@ -30,6 +36,23 @@ const Salary = () => {
       setDepartments(response.data.data);
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const fetchEmployeeById = async (id) => {
+    try {
+      setLoading(true);
+      const response = await employeeAPI.getById(id);
+      const employee = response.data.data;
+      setEmployees(employee ? [employee] : []);
+      if (employee?.department?._id) {
+        setSelectedDept(employee.department._id);
+      }
+    } catch (err) {
+      console.error(err);
+      setEmployees([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,7 +94,11 @@ const Salary = () => {
       await salaryAPI.update(currentEmployee._id, salaryData);
       alert("Salary updated successfully");
       setShowModal(false);
-      fetchEmployeesByDept(selectedDept);
+      if (employeeId) {
+        fetchEmployeeById(employeeId);
+      } else {
+        fetchEmployeesByDept(selectedDept);
+      }
     } catch (err) {
       alert(err.message || "Failed to update salary");
     }
@@ -93,16 +120,18 @@ const Salary = () => {
             <p>Update employee salaries by department</p>
           </div>
 
-          <div className="filter-section">
-            <FormInput
-              label="Select Department"
-              type="select"
-              name="department"
-              value={selectedDept}
-              onChange={handleDeptChange}
-              options={deptOptions}
-            />
-          </div>
+          {!employeeId && (
+            <div className="filter-section">
+              <FormInput
+                label="Select Department"
+                type="select"
+                name="department"
+                value={selectedDept}
+                onChange={handleDeptChange}
+                options={deptOptions}
+              />
+            </div>
+          )}
 
           {loading && <LoadingSpinner />}
 

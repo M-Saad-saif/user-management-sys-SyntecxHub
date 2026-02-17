@@ -14,6 +14,7 @@ const {
   leaveValidation,
   leaveStatusValidation,
   idValidation,
+  employeeIdValidation,
   validate
 } = require('../utils/validation');
 
@@ -22,7 +23,7 @@ router.use(protect);
 
 router.get('/', restrictTo('admin'), getAllLeaves);
 router.get('/my-leaves', restrictTo('employee'), getMyLeaves);
-router.get('/employee/:employeeId', restrictTo('admin'), idValidation, validate, getLeavesByEmployee);
+router.get('/employee/:employeeId', restrictTo('admin'), employeeIdValidation, validate, getLeavesByEmployee);
 
 router.post('/', restrictTo('employee'), leaveValidation, validate, applyLeave);
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { leaveAPI } from "../../services/api";
 import Sidebar from "../../components/common/Sidebar";
 import Navbar from "../../components/common/Navbar";
@@ -7,16 +8,19 @@ import Button from "../../components/common/Button";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 
 const Leaves = () => {
+  const { employeeId } = useParams();
   const [leaves, setLeaves] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchLeaves();
-  }, []);
+  }, [employeeId]);
 
   const fetchLeaves = async () => {
     try {
-      const response = await leaveAPI.getAll();
+      const response = employeeId
+        ? await leaveAPI.getByEmployee(employeeId)
+        : await leaveAPI.getAll();
       setLeaves(response.data.data);
     } catch (err) {
       console.error(err);
@@ -96,8 +100,12 @@ const Leaves = () => {
         <Navbar />
         <div className="content-area">
           <div className="page-header">
-            <h1>Leave Management</h1>
-            <p>Manage all leave requests</p>
+            <h1>{employeeId ? "Employee Leave History" : "Leave Management"}</h1>
+            <p>
+              {employeeId
+                ? "View leave requests for selected employee"
+                : "Manage all leave requests"}
+            </p>
           </div>
           <Table columns={columns} data={leaves} actions={actions} />
         </div>

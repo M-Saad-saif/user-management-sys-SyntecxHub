@@ -85,7 +85,23 @@ function App() {
             }
           />
           <Route
+            path="/admin/leaves/employee/:employeeId"
+            element={
+              <ProtectedRoute requireAdmin={true}>
+                <Leaves />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/admin/salary"
+            element={
+              <ProtectedRoute requireAdmin={true}>
+                <Salary />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/salary/employee/:employeeId"
             element={
               <ProtectedRoute requireAdmin={true}>
                 <Salary />

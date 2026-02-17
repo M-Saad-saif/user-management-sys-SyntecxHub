@@ -10,11 +10,11 @@ const {
 } = require('../controllers/employeeController');
 const { protect } = require('../middleware/authMiddleware');
 const { restrictTo } = require('../middleware/roleMiddleware');
-const upload = require('../utils/uploadConfig');
 const {
   employeeValidation,
   employeeUpdateValidation,
   idValidation,
+  departmentIdValidation,
   validate
 } = require('../utils/validation');
 
@@ -22,13 +22,12 @@ const {
 router.use(protect);
 
 router.get('/', restrictTo('admin'), getAllEmployees);
-router.get('/department/:departmentId', restrictTo('admin'), idValidation, validate, getEmployeesByDepartment);
+router.get('/department/:departmentId', restrictTo('admin'), departmentIdValidation, validate, getEmployeesByDepartment);
 router.get('/:id', idValidation, validate, getEmployee);
 
 router.post(
   '/',
   restrictTo('admin'),
-  upload.single('profilePicture'),
   employeeValidation,
   validate,
   createEmployee
@@ -37,7 +36,6 @@ router.post(
 router.put(
   '/:id',
   restrictTo('admin'),
-  upload.single('profilePicture'),
   idValidation,
   employeeUpdateValidation,
   validate,

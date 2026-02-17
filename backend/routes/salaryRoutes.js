@@ -10,7 +10,7 @@ const { protect } = require('../middleware/authMiddleware');
 const { restrictTo } = require('../middleware/roleMiddleware');
 const {
   salaryValidation,
-  idValidation,
+  employeeIdValidation,
   validate
 } = require('../utils/validation');
 
@@ -19,12 +19,12 @@ router.use(protect);
 
 router.get('/', restrictTo('admin'), getAllSalaries);
 router.get('/my-salary', restrictTo('employee'), getMySalaryHistory);
-router.get('/employee/:employeeId', restrictTo('admin'), idValidation, validate, getSalaryHistory);
+router.get('/employee/:employeeId', restrictTo('admin'), employeeIdValidation, validate, getSalaryHistory);
 
 router.post(
   '/:employeeId',
   restrictTo('admin'),
-  idValidation,
+  employeeIdValidation,
   salaryValidation,
   validate,
   updateSalary

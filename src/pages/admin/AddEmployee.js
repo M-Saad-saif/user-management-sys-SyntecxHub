@@ -18,7 +18,6 @@ const AddEmployee = () => {
     department: "",
     salary: "",
   });
-  const [profilePicture, setProfilePicture] = useState(null);
   const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -44,10 +43,6 @@ const AddEmployee = () => {
     });
   };
 
-  const handleFileChange = (e) => {
-    setProfilePicture(e.target.files[0]);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -58,10 +53,6 @@ const AddEmployee = () => {
       Object.keys(formData).forEach((key) => {
         data.append(key, formData[key]);
       });
-
-      if (profilePicture) {
-        data.append("profilePicture", profilePicture);
-      }
 
       await employeeAPI.create(data);
       alert("Employee created successfully");
@@ -183,13 +174,6 @@ const AddEmployee = () => {
                   onChange={handleChange}
                   rows={3}
                   required
-                />
-
-                <FormInput
-                  label="Profile Picture"
-                  type="file"
-                  name="profilePicture"
-                  onChange={handleFileChange}
                 />
               </div>
 

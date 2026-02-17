@@ -44,10 +44,6 @@ const employeeSchema = new mongoose.Schema({
     required: [true, "Salary is required"],
     min: [0, "Salary must be positive"],
   },
-  profilePicture: {
-    type: String,
-    default: "",
-  },
   dateJoined: {
     type: Date,
     default: Date.now,

@@ -125,3 +125,13 @@ exports.salaryValidation = [
 exports.idValidation = [
   param("id").isMongoId().withMessage("Invalid ID format"),
 ];
+
+exports.employeeIdValidation = [
+  param("employeeId").isMongoId().withMessage("Invalid employee ID format"),
+];
+
+exports.departmentIdValidation = [
+  param("departmentId")
+    .isMongoId()
+    .withMessage("Invalid department ID format"),
+];
