@@ -58,7 +58,11 @@ const AddEmployee = () => {
       alert("Employee created successfully");
       navigate("/admin/employees");
     } catch (err) {
-      setError(err.message || "Failed to create employee");
+      if (err?.errors?.length) {
+        setError(err.errors.map((e) => e.message).join(", "));
+      } else {
+        setError(err.message || "Failed to create employee");
+      }
     } finally {
       setLoading(false);
     }

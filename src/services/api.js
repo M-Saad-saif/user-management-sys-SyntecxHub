@@ -53,14 +53,8 @@ export const employeeAPI = {
   getById: (id) => api.get(`/employees/${id}`),
   getByDepartment: (departmentId) =>
     api.get(`/employees/department/${departmentId}`),
-  create: (formData) =>
-    api.post("/employees", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    }),
-  update: (id, formData) =>
-    api.put(`/employees/${id}`, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    }),
+  create: (formData) => api.post("/employees", formData),
+  update: (id, formData) => api.put(`/employees/${id}`, formData),
   delete: (id) => api.delete(`/employees/${id}`),
 };
 

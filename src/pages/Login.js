@@ -86,9 +86,6 @@ const Login = () => {
           <p>
             <strong>Admin:</strong> admin@example.com / admin123
           </p>
-          <p>
-            <strong>Employee:</strong> employee@example.com / emp123
-          </p>
         </div>
       </div>
     </div>

@@ -4,21 +4,47 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 9999;
     padding: 1rem;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .modal-content {
-    background-color: var(--white);
-    border-radius: 0.5rem;
-    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, var(--white), #fafafa);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-xl);
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
+    animation: slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border: 1px solid rgba(229, 231, 235, 0.5);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .modal-small {
@@ -35,16 +61,21 @@
 
 .modal-header {
     padding: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+    border-radius: 1rem 1rem 0 0;
 }
 
 .modal-header h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .modal-close {
@@ -53,23 +84,26 @@
     font-size: 2rem;
     color: var(--text-secondary);
     cursor: pointer;
-    padding: 0;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0.25rem;
-    transition: all 0.2s ease;
+    border-radius: 50%;
+    transition: var(--transition-base);
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .modal-close:hover {
-    background-color: var(--light-bg);
-    color: var(--text-primary);
+    background: var(--danger-color);
+    color: white;
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: var(--shadow-md);
 }
 
 .modal-body {
     padding: 1.5rem;
+    background: linear-gradient(135deg, var(--white), #ffffff);
 }
 
 @media (max-width: 768px) {
@@ -82,10 +116,16 @@
     }
 
     .modal-header h2 {
-        font-size: 1.125rem;
+        font-size: 1.25rem;
     }
 
     .modal-body {
         padding: 1rem;
+    }
+
+    .modal-close {
+        width: 32px;
+        height: 32px;
+        font-size: 1.5rem;
     }
 }

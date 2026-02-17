@@ -1,62 +1,110 @@
 .table-container {
-    background-color: var(--white);
-    border-radius: 0.5rem;
-    box-shadow: var(--shadow-md);
+    background: linear-gradient(135deg, var(--white), #fafafa);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-lg);
     overflow: hidden;
+    border: 1px solid rgba(229, 231, 235, 0.5);
+    transition: var(--transition-base);
+}
+
+.table-container:hover {
+    box-shadow: var(--shadow-xl);
 }
 
 .custom-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
 .custom-table thead {
-    background-color: var(--light-bg);
+    background: linear-gradient(135deg, #f9fafb, #f3f4f6);
 }
 
 .custom-table th {
-    padding: 1rem;
+    padding: 1.25rem 1rem;
     text-align: left;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
+    position: relative;
+}
+
+.custom-table th::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-color), transparent);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.custom-table th:hover::after {
+    transform: scaleX(1);
 }
 
 .custom-table tbody tr {
+    transition: var(--transition-base);
     border-bottom: 1px solid var(--border-color);
-    transition: background-color 0.2s ease;
-}
-
-.custom-table tbody tr:hover {
-    background-color: var(--light-bg);
 }
 
 .custom-table tbody tr:last-child {
     border-bottom: none;
 }
 
+.custom-table tbody tr:hover {
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+    transform: scale(1.01);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+}
+
 .custom-table td {
-    padding: 1rem;
+    padding: 1.25rem 1rem;
     font-size: 0.875rem;
     color: var(--text-primary);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.custom-table tbody tr:last-child td {
+    border-bottom: none;
 }
 
 .custom-table td.actions {
     white-space: nowrap;
 }
 
+.custom-table td.actions button {
+    margin: 0 0.25rem;
+    opacity: 0.7;
+    transition: var(--transition-base);
+}
+
+.custom-table td.actions button:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
 .custom-table td.no-data {
     text-align: center;
-    padding: 3rem 1rem;
+    padding: 4rem 1rem;
     color: var(--text-secondary);
+    font-size: 1rem;
+    background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+    border-radius: 0 0 1rem 1rem;
 }
 
 @media (max-width: 768px) {
     .table-container {
         overflow-x: auto;
+        border-radius: 0.75rem;
     }
 
     .custom-table {
@@ -65,7 +113,11 @@
 
     .custom-table th,
     .custom-table td {
-        padding: 0.75rem;
+        padding: 1rem 0.75rem;
         font-size: 0.8125rem;
+    }
+
+    .custom-table tbody tr:hover {
+        transform: none;
     }
 }
