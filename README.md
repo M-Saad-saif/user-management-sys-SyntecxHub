@@ -401,32 +401,6 @@ Use MongoDB Atlas for cloud database:
 5. Update profile
 6. Change password
 
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**MongoDB connection error:**
-- Ensure MongoDB is running
-- Check connection string in .env
-- Verify network access if using MongoDB Atlas
-
-**Port already in use:**
-- Change PORT in backend .env
-- Kill the process using the port
-
-**CORS errors:**
-- Verify frontend URL in backend CORS config
-- Check API URL in frontend .env
-
-**File upload errors:**
-- Ensure uploads folder exists in backend
-- Check file size limits
-- Verify multer configuration
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-
 ## 👥 Contributing
 
 Contributions are welcome! Please follow these steps:
@@ -436,10 +410,6 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch
 5. Open a pull request
 
-## 📧 Contact
-
-For questions or support, please open an issue in the repository.
-
 ---
 
-**Built with ❤️ using MERN Stack**
+**Built with MERN Stack**
